@@ -1,0 +1,97 @@
+body {
+    font-family: 'Segoe UI', Arial;
+    background: url('/content/img/bg.png') repeat;
+}
+
+#navigation-panel a{
+    color: #333;
+}
+
+#navigation-panel a:hover{
+    text-decoration: none;
+}
+
+#navigation-panel a h1 {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#main-picture {
+    background: black;
+}
+
+#slogan {
+    font-size: 1.9em;
+}
+
+#projects ul {
+    list-style: none;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+#projects ul li a {
+    color: #333;
+}
+
+#projects ul li a:hover {
+    text-decoration: none;
+}
+
+#projects ul li a:hover {
+    color: #E37663;
+}
+
+#social-links {
+    background: #F4F4F4;
+}
+
+
+#social-links ul {
+    list-style: none;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+
+footer {
+    background: #543427;
+    color: White;
+    height: 50px;
+    padding-top: 15px;
+}
+
+.border {
+    height: 5px;
+    background: #E37663;
+}
+
+.padding-down ~ .container {
+    padding-top: 15px;
+}
+
+.padding-up {
+    margin-top: 15px;
+}
+
+#talks-video {
+    background: black;
+}
+
+#talks-video h2 {
+    color: white;
+}
+
+.carousel-indicators {
+    top: 0px;
+    height: 20px;
+}
+
+.carousel-inner .item h4{
+    color: white;
+}
+
+.indicators-placeholder {
+    height: 30px;
+}
