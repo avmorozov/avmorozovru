@@ -1,0 +1,19 @@
+﻿@functions{
+
+    public static List<Tuple<string, string>> GetVideoDesc()
+    {
+        var talksVideo = new List<Tuple<string,string>>();
+        using(var file = new StreamReader(Server.MapPath("~/App_Data/talks-video.data")))
+        {
+            while(!file.EndOfStream)
+            {
+                var s = file.ReadLine();   
+                var videoDesc = new Tuple<string, string>(s.Substring(0, s.IndexOf(' ')),s.Substring(s.IndexOf(' ')+1));
+                talksVideo.Add(videoDesc);
+            }
+            file.Close();
+        }
+        return talksVideo;
+    }
+
+}

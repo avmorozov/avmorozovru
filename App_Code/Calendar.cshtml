@@ -1,0 +1,63 @@
+﻿@functions{
+
+    private static double updateFreq = 0.1;
+    private static string calendarFileName = Server.MapPath("~/App_Data/calendar.data");
+
+    public static List<dynamic> GetCalendar()
+    {
+        List<dynamic> result;
+
+        using(var file = new StreamReader(calendarFileName))
+        {
+            result = Json.Decode<List<dynamic>>(file.ReadToEnd());
+            file.Close();            
+        }
+
+        var calendarFileInfo = new FileInfo(calendarFileName);
+        if(DateTime.Now.Subtract(calendarFileInfo.LastWriteTime).TotalHours > updateFreq)
+        {
+            var thread = new System.Threading.Thread(RefreshCalendar);
+            thread.Start();
+        }
+
+        return result;
+    }
+
+    private static object o = new object();
+
+    private static void RefreshCalendar()
+    {
+        lock(o)
+        {
+            var calendarFileInfo = new FileInfo(calendarFileName);
+            if(DateTime.Now.Subtract(calendarFileInfo.LastWriteTime).TotalHours < updateFreq)
+                return;
+
+            var calendarUrl = "https://cid-20f441e62696c4ac.calendar.live.com/calendar/private/2cc082d4-4c5b-49a9-802b-6b27978dc40a/d28ee2a5-a98e-48b0-b642-d0cc3c8f9783/calendar.xml";
+            var client = new WebClient();
+            var calendarFeed = System.Xml.Linq.XDocument.Parse(client.DownloadString(calendarUrl));
+
+            System.Xml.Linq.XNamespace ns = "http://www.w3.org/2005/Atom";
+            var eventDescs = (
+                from entry in calendarFeed.Descendants(ns+"entry")
+                let title = entry.Descendants(ns+"title").First().Value.ToString()
+                let content = System.Xml.Linq.XDocument.Parse(entry.Descendants(ns+"content").First().Value)
+                let date = content.Descendants("td").Skip(2).First().Value
+                select new {
+                    Name = title.Substring(0, title.IndexOf(" - ")),
+                    Date = DateTime.Parse(date.Substring(0, date.IndexOf("(")).Replace(" года,", ""), new System.Globalization.CultureInfo("ru-RU")),
+                    Place = content.Descendants("td").Skip(8).First().Value  
+                })
+                .Where(x=>x.Date > DateTime.Now)
+                .Take(10)
+                .ToList();
+
+            using(var calendarFile = new StreamWriter(calendarFileName, false))
+            {
+                Json.Write(eventDescs, calendarFile);
+                calendarFile.Close();
+            }
+        }
+    }
+
+}

@@ -1,5 +1,7 @@
 ﻿@{
     Layout="~/Shared/_MasterPage.cshtml";
+    var talksVideo = Video.GetVideoDesc();
+    var calendar = Calendar.GetCalendar();
 }
 
 
@@ -14,21 +16,14 @@
                     <li data-target="#video-carousel" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner center-block">
-                    <div class="item active row">
-                        <div class="indicators-placeholder"></div>
-                        <iframe class="center-block" src="//player.vimeo.com/video/91832322?badge=0&byline=0&color=E37663&portrait=0&title=0" width="800" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        <h4 class="text-center">ALM Summit 2012</h4>
-                    </div>
-                    <div class="item row">
-                        <div class="indicators-placeholder"></div>
-                        <iframe class="center-block" src="//player.vimeo.com/video/91832657?badge=0&byline=0&color=E37663&portrait=0&title=0" width="800" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        <h4 class="text-center">Интервью DevCon 2013</h4>
-                    </div>
-                    <div class="item row">
-                        <div class="indicators-placeholder"></div>
-                        <iframe class="center-block" src="//player.vimeo.com/video/91832853?badge=0&byline=0&color=E37663&portrait=0&title=0" width="800" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        <h4 class="text-center">TechEd 2012</h4>
-                    </div>
+                    @foreach(var videoDesc in talksVideo)
+                    {
+                        <div class="item @(talksVideo.First() == videoDesc?"active":"") row">
+                            <div class="indicators-placeholder"></div>
+                            <iframe class="center-block" src="//player.vimeo.com/video/@videoDesc.Item1?badge=0&byline=0&color=E37663&portrait=0&title=0" width="800" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            <h4 class="text-center">@videoDesc.Item2</h4>
+                        </div>
+                    }
                 </div>
                 <a class="left carousel-control" href="#video-carousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                 <a class="right carousel-control" href="#video-carousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -42,6 +37,6 @@
 <article class="container">
     <div class="row">
         <h2 class="text-center">Предстоящие события</h2>
-        <p class="text-center">Нет предстоящих событий</p>
+        <p class="text-center">Нет предстоящих событий </p>
     </div>
 </article>
