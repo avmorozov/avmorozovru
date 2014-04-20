@@ -1,6 +1,6 @@
 ﻿@functions{
 
-    private static double updateFreq = 0.1;
+    private static double updateFreq = 0.2;
     private static string calendarFileName = Server.MapPath("~/App_Data/calendar.data");
 
     public static List<dynamic> GetCalendar()
@@ -24,6 +24,9 @@
     }
 
     private static object o = new object();
+    private static string DescriptionPrefix = @"Описание:&lt;/b&gt;&lt;/td&gt;&lt;td style=""width:10px"" align=""right"" /&gt;&lt;td&gt;";
+    private static string DescriptionSuffix = @"&lt;/td&gt;&lt;/tr&gt;&lt;";
+
 
     private static void RefreshCalendar()
     {
@@ -43,12 +46,15 @@
                 let title = entry.Descendants(ns+"title").First().Value.ToString()
                 let content = System.Xml.Linq.XDocument.Parse(entry.Descendants(ns+"content").First().Value)
                 let date = content.Descendants("td").Skip(2).First().Value
+                let desc = content.Descendants("td").Skip(14).First().Value
                 select new {
                     Name = title.Substring(0, title.IndexOf(" - ")),
                     Date = DateTime.Parse(date.Substring(0, date.IndexOf("(")).Replace(" года,", ""), new System.Globalization.CultureInfo("ru-RU")),
-                    Place = content.Descendants("td").Skip(8).First().Value  
+                    Place = content.Descendants("td").Skip(8).First().Value,  
+                    Desc = desc
                 })
                 .Where(x=>x.Date > DateTime.Now)
+                .OrderBy(x=>x.Date)
                 .Take(10)
                 .ToList();
 
