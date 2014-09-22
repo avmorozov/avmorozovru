@@ -1,0 +1,17 @@
+﻿@functions{
+    
+    private static string coursesFileName = Server.MapPath("~/App_Data/courses.data");
+
+    public static List<dynamic> GetCourses()
+    {
+        List<dynamic> result;
+
+        using(var file = new StreamReader(coursesFileName))
+        {
+            result = Json.Decode<List<dynamic>>(file.ReadToEnd());
+            file.Close();            
+        }
+
+        return result;
+    }
+}

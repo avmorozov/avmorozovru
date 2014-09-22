@@ -36,7 +36,7 @@
             if(DateTime.Now.Subtract(calendarFileInfo.LastWriteTime).TotalHours < updateFreq)
                 return;
 
-            var calendarUrl = "https://cid-20f441e62696c4ac.calendar.live.com/calendar/private/2cc082d4-4c5b-49a9-802b-6b27978dc40a/d28ee2a5-a98e-48b0-b642-d0cc3c8f9783/calendar.xml";
+            var calendarUrl = "https://sharing.calendar.live.com/calendar/private/5f7dde6d-b299-4306-9f32-c698b1638fd8/71269b05-978b-4485-9ed1-020c8207010d/cid-6e6c453277f846b0/calendar.xml";
             var client = new WebClient();
             var calendarFeed = System.Xml.Linq.XDocument.Parse(client.DownloadString(calendarUrl));
 

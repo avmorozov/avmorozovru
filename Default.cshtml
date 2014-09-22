@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Shared/_MasterPage.cshtml";
+    var courses = CourseThesis.GetCourses();
 }
 
 <div id="main-picture" class="container-fluid hidden-phone">
@@ -13,10 +14,10 @@
 
 <article id="content" class="container">
     <div class="col-md-12">
-        <p id="slogan">Я руководитель, преподаватель, разработчик.
+        <p class="slogan">Я руководитель, преподаватель, разработчик.
                Моя задача - помогать коллегам разрабатывать качественное программное обеспечение на профессиональном уровне.</p>
     </div>
-    <div id="projects" class="row">
+    <div class="horisontal-list" class="row">
         <ul>
             <li class="col-md-4">
                 <a href="/Talks">
@@ -45,6 +46,40 @@
                     </div>
                 </a>
             </li>
+        </ul>
+    </div>
+</article>
+
+<div class="border container-fluid padding-up"></div>
+<div id="main-picture" class="container-fluid hidden-phone">
+    <div class="container">
+        <img class="row center-block visible-md visible-lg" src="/content/img/courses.jpg" alt="Курсы для студентов и магистрантов" />
+        <img class="row center-block visible-sm" src="/content/img/courses-small.jpg" alt="Курсы для студентов и магистрантов" />
+        <h2 class="slogan">Если Вы хотите учиться - Вы уже на правильном пути</h2>
+    </div>
+</div>
+
+<article class="container">
+    <div class="horisontal-list">
+        <ul>
+            @foreach(var courseGroup in courses.GroupBy(x=>courses.IndexOf(x)/3))
+            {
+                <li class="row"> 
+                    <ul>
+                        @foreach(var course in courseGroup)
+                        {
+                            <li>
+                                <a href="/Courses/@course["Id"]">
+                                    <div class="col-md-4">
+                                        <h3>@course["Name"]</h3>
+                                        <p>@course["Description"]</p>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
         </ul>
     </div>
 </article>

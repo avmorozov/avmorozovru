@@ -21,25 +21,32 @@ body {
     background: black;
 }
 
-#slogan {
+.slogan {
     font-size: 1.9em;
 }
 
-#projects ul {
+#main-picture .slogan{
+    color: white;
+    text-align: center;
+    margin-top: -55px;
+    padding-bottom: 18px; 
+}
+
+.horisontal-list ul {
     list-style: none;
     padding: 0px 0px 0px 10px;
     margin: 0px 0px 0px 0px;
 }
 
-#projects ul li a {
+.horisontal-list ul li a {
     color: #333;
 }
 
-#projects ul li a:hover {
+.horisontal-list ul li a:hover {
     text-decoration: none;
 }
 
-#projects ul li a:hover {
+.horisontal-list ul li a:hover {
     color: #E37663;
 }
 
